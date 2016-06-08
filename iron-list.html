@@ -1429,7 +1429,10 @@ will only render 20.
 
         if (this._itemsRendered && this._physicalItems && this._isVisible) {
           this._resetAverage();
-          this.scrollToIndex(this.firstVisibleIndex);
+          // debounce scrollToIndex for 16ms to save cpu cycles
+          this.debounce('scrollToIndex', function(){
+            this.scrollToIndex(this.firstVisibleIndex);
+          }, 16);
         }
       }.bind(this), 1));
     },
